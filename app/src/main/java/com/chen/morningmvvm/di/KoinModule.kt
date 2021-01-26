@@ -3,7 +3,7 @@ package com.chen.morningmvvm.di
 
 import com.chen.moringmvvmlibrary.CoroutinesDispatcherProvider
 import com.chen.moringmvvmlibrary.network.RetrofitClient
-import com.chen.morningmvvm.model.LoginRepository
+import com.chen.morningmvvm.ui.account.login.LoginRepository
 import com.chen.morningmvvm.model.api.RetrofitService
 import com.chen.morningmvvm.ui.account.login.LoginViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel

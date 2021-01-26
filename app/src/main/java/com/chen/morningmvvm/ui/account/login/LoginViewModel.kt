@@ -5,13 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chen.moringmvvmlibrary.CoroutinesDispatcherProvider
 import com.chen.moringmvvmlibrary.base.BaseViewModel
-import com.chen.morningmvvm.model.LoginRepository
 import com.chen.morningmvvm.model.bean.User
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 
 /**
- * login ViewModel
+ * 登录页ViewModel
  */
 class LoginViewModel(val repository: LoginRepository, val provider: CoroutinesDispatcherProvider) : BaseViewModel() {
     val userName = ObservableField<String>("")

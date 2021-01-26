@@ -1,4 +1,4 @@
-package com.chen.morningmvvm.model
+package com.chen.morningmvvm.ui.account.login
 
 import com.chen.morningmvvm.app.MyApp
 import com.chen.morningmvvm.model.api.BaseRepository
@@ -12,18 +12,20 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.flowOn
 import com.chen.morningmvvm.model.bean.doError
 import com.chen.morningmvvm.model.bean.doSuccess
-import com.chen.morningmvvm.ui.account.login.LoginUiState
 import com.chen.morningmvvm.utils.network.Preference
 import kotlinx.coroutines.flow.catch
 
 /**
- * 登陆页网络请求
+ * 登陆页model
  */
 class LoginRepository(val service: RetrofitService) : BaseRepository() {
 
     private var isLogin by Preference(Preference.IS_LOGIN, false)
     private var userJson by Preference(Preference.USER_GSON, "")
 
+    /**
+     * 登录
+     */
     @ExperimentalCoroutinesApi
     suspend fun loginFlow(userName: String, passWord: String) = flow {
 
@@ -49,6 +51,9 @@ class LoginRepository(val service: RetrofitService) : BaseRepository() {
     }
 
 
+    /**
+     * 注册
+     */
     @ExperimentalCoroutinesApi
     suspend fun registerFlow(userName: String, passWord: String) = flow<LoginUiState<User>> {
 
