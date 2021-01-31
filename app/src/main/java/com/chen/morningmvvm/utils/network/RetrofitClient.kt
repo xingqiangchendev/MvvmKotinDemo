@@ -10,7 +10,9 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 
-
+/**
+ * 网络封装
+ */
 object RetrofitClient : BaseRetrofitClient() {
 
     val service by lazy { getService(RetrofitService::class.java, RetrofitService.BASE_URL) }

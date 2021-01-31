@@ -1,11 +1,13 @@
 package com.chen.morningmvvm.ui.account.login
 
 import android.app.ProgressDialog
+import android.util.Log
 import androidx.lifecycle.Observer
 import com.chen.moringmvvmlibrary.base.BaseVMActivity
 import com.chen.morningmvvm.R
 import com.chen.morningmvvm.databinding.AtyLoginBinding
 import com.chen.morningmvvm.model.bean.Title
+import com.chen.morningmvvm.ui.home.HomeAty
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import luyao.util.ktx.ext.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,26 +34,27 @@ class LoginAty : BaseVMActivity() {
 
 
 
-    @ExperimentalCoroutinesApi
     override fun startObserve() {
-        loginViewModel.apply {
-
-            uiState.observe(this@LoginAty, Observer {
-                if (it.isLoading) showProgressDialog()
-
-                it.isSuccess?.let {
-                    dismissProgressDialog()
-                    finish()
-                }
-
-                it.isError?.let { err ->
-                    dismissProgressDialog()
-                    toast(err)
-                }
-
-                if (it.needLogin) loginViewModel.login()
-            })
-        }
+//        loginViewModel.apply {
+//
+//            uiState.observe(this@LoginAty, Observer {
+//                if (it.isLoading) showProgressDialog()
+//
+//                it.isSuccess?.let {
+//                    Log.e("==========cxq", "请求成功: ", )
+//                    startActivity(intent.setClass(this@LoginAty, HomeAty::class.java))
+//                    dismissProgressDialog()
+//                    finish()
+//                }
+//
+//                it.isError?.let { err ->
+//                    dismissProgressDialog()
+//                    toast(err)
+//                }
+//
+//                if (it.needLogin) loginViewModel.login()
+//            })
+//        }
     }
 
     private var progressDialog: ProgressDialog? = null

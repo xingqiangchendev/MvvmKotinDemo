@@ -1,9 +1,11 @@
 package com.chen.morningmvvm.model.api
 
+import android.util.Log
+import com.chen.moringmvvmlibrary.network.Result
+import com.chen.moringmvvmlibrary.network.RetrofitClient
+import com.chen.morningmvvm.model.bean.RetrofitResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
-import com.chen.moringmvvmlibrary.network.Result
-import com.chen.morningmvvm.model.bean.RetrofitResponse
 import java.io.IOException
 
 /**
@@ -12,30 +14,46 @@ import java.io.IOException
  */
 open class BaseRepository {
 
-    suspend fun <T : Any> apiCall(call: suspend () -> RetrofitResponse<T>): RetrofitResponse<T> {
-        return call.invoke()
+    /**
+     * post请求网络
+     */
+    suspend fun postResuest(url: String, map: Map<String, String>): Result<Any> {
+        return safeApiCall(call = {
+            executeResponse(
+                RetrofitClient.service.postQueryMap(
+                    url,
+                    map
+                )
+            )
+        })
     }
 
-    suspend fun <T : Any> safeApiCall(call: suspend () -> Result<T>, errorMessage: String): Result<T> {
+    /**
+     * 异常处理
+     */
+    suspend fun <T : Any> safeApiCall(call: suspend () -> Result<T>): Result<T> {
         return try {
             call()
         } catch (e: Exception) {
             // An exception was thrown when calling the API so we're converting this to an IOException
-            Result.Error(IOException(errorMessage, e))
+            Result.Error(IOException(e.toString(), e))
         }
     }
 
-    suspend fun <T : Any> executeResponse(response: RetrofitResponse<T>, successBlock: (suspend CoroutineScope.() -> Unit)? = null,
-                                          errorBlock: (suspend CoroutineScope.() -> Unit)? = null): Result<T> {
-        return coroutineScope {
+    /**
+     * response: 请求返回的数据
+     */
+    suspend fun <T : Any> executeResponse(
+        response: RetrofitResponse<T>,
+    ): Result<T> {
+        val result = coroutineScope {
             if (response.errorCode == -1) {
-                errorBlock?.let { it() }
                 Result.Error(IOException(response.errorMsg))
             } else {
-                successBlock?.let { it() }
                 Result.Success(response.data)
             }
         }
+        return result
     }
 
 

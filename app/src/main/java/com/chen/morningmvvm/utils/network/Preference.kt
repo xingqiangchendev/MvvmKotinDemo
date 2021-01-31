@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.chen.morningmvvm.app.MyApp
 import java.io.*
+import kotlin.jvm.Throws
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
