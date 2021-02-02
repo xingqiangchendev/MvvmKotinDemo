@@ -1,6 +1,6 @@
 package com.chen.moringmvvmlibrary.network
 
-import com.chen.moringmvvmlibrary.base.BaseApp
+import com.chen.morningmvvm.app.MyApp
 import com.chen.morningmvvm.model.api.RetrofitService
 import okhttp3.Cache
 import okhttp3.CacheControl
@@ -20,27 +20,27 @@ object RetrofitClient : BaseRetrofitClient() {
     private val cookieJar by lazy {
         PersistentCookieJar(
             SetCookieCache(),
-            SharedPrefsCookiePersistor(BaseApp.CONTEXT)
+            SharedPrefsCookiePersistor(MyApp.CONTEXT)
         )
     }
 
 
     override fun handleBuilder(builder: OkHttpClient.Builder) {
 
-        val httpCacheDirectory = File(BaseApp.CONTEXT.cacheDir, "responses")
+        val httpCacheDirectory = File(MyApp.CONTEXT.cacheDir, "responses")
         val cacheSize = 10 * 1024 * 1024L // 10 MiB
         val cache = Cache(httpCacheDirectory, cacheSize)
         builder.cache(cache)
             .cookieJar(cookieJar)
             .addInterceptor { chain ->
                 var request = chain.request()
-                if (!NetWorkUtils.isNetworkAvailable(BaseApp.CONTEXT)) {
+                if (!NetWorkUtils.isNetworkAvailable(MyApp.CONTEXT)) {
                     request = request.newBuilder()
                         .cacheControl(CacheControl.FORCE_CACHE)
                         .build()
                 }
                 val response = chain.proceed(request)
-                if (!NetWorkUtils.isNetworkAvailable(BaseApp.CONTEXT)) {
+                if (!NetWorkUtils.isNetworkAvailable(MyApp.CONTEXT)) {
                     val maxAge = 60 * 60
                     response.newBuilder()
                         .removeHeader("Pragma")

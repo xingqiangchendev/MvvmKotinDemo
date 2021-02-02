@@ -3,6 +3,9 @@ package com.chen.moringmvvmlibrary
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
+/**
+ * 线程调度
+ */
 data class CoroutinesDispatcherProvider  (
     val main: CoroutineDispatcher = Dispatchers.Main,
     val computation: CoroutineDispatcher = Dispatchers.Default,
